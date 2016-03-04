@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/scala"/>
+	<classpathentry kind="src" path="src/main/scala-2.11"/>
+	<classpathentry kind="src" path="target/scala-2.11/src_managed/main"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/scala"/>
+	<classpathentry kind="src" path="src/test/scala-2.11"/>
+	<classpathentry kind="src" path="target/scala-2.11/src_managed/test"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="target/scala-2.11/resource_managed/main"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="target/scala-2.11/resource_managed/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang:scala-library:2.11.7:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe:config:1.3.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-actor_2.11:2.4.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang.modules:scala-java8-compat_2.11:0.7.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.github.nscala-time:nscala-time_2.11:1.0.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: joda-time:joda-time:2.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.mongodb:casbah-commons_2.11:2.7.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.mongodb:casbah-core_2.11:2.7.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.mongodb:casbah-gridfs_2.11:2.7.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.mongodb:casbah-query_2.11:2.7.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.mongodb:mongo-java-driver:2.12.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.chuusai:shapeless_2.11:1.2.4:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-can_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-http_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-httpx_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-io_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-routing_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-util_2.11:1.3.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.jvnet.mimepull:mimepull:1.9.5:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.parboiled:parboiled-core:1.1.7:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.parboiled:parboiled-scala_2.11:1.1.7:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang.modules:scala-xml_2.11:1.0.3:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.thoughtworks.paranamer:paranamer:2.6:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.json4s:json4s-ast_2.11:3.2.11:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.json4s:json4s-core_2.11:3.2.11:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.json4s:json4s-native_2.11:3.2.11:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang:scala-compiler:2.11.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang:scalap:2.11.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.fasterxml.jackson.core:jackson-annotations:2.3.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.fasterxml.jackson.core:jackson-core:2.3.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.fasterxml.jackson.core:jackson-databind:2.3.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.play:play-datacommons_2.11:2.4.0-M1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.play:play-functional_2.11:2.4.0-M1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.play:play-iteratees_2.11:2.4.0-M1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.play:play-json_2.11:2.4.0-M1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.joda:joda-convert:1.6:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang:scala-reflect:2.11.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-stm:scala-stm_2.11:0.7:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: io.spray:spray-json_2.11:1.3.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-slf4j_2.11:2.4.2:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.slf4j:slf4j-api:1.7.16:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe:ssl-config-akka_2.11:0.1.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe:ssl-config-core_2.11:0.1.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-http-core-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-http-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-http-spray-json-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-http-testkit-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-parsing-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-stream-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-stream-testkit-experimental_2.11:2.0.1:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: com.typesafe.akka:akka-testkit_2.11:2.3.12:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.reactivestreams:reactive-streams:1.0.0:jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SBT: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.4:jar"/>
+	<classpathentry kind="output" path="target/scala-2.11/classes"/>
+</classpath>
