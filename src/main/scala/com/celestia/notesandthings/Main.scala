@@ -15,6 +15,8 @@ import spray.can.Http
 import spray.httpx.SprayJsonSupport._
 import spray.json.DefaultJsonProtocol._
 
+import scala.util.Properties
+
 //import com.mongodb.casbah._
 import com.mongodb.casbah.Imports._
 //import com.mongodb.casbah.query.Imports._
@@ -138,12 +140,14 @@ object Main extends App {
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(5 seconds)
     implicit def executionContext = system.dispatcher
+    val port = Properties.envOrElse("PORT", "3000)").toInt
 
     val serverActor = system.actorOf(Props[ServerActor])
 //    (serverActor ? None)
 //        .foreach { _ => println("Something Happened!") }
 
-    IO(Http) ! Http.Bind(serverActor, interface="127.0.0.1", port=3000)
+//    IO(Http) ! Http.Bind(serverActor, interface="127.0.0.1", port=80)
+    IO(Http) ask Http.Bind(serverActor, interface="0.0.0.0", port=port)
   }
 }
 
