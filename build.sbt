@@ -1,8 +1,9 @@
+
 name := "NotesAndThings"
-
 version := "1.0"
-
 scalaVersion := "2.11.7"
+
+enablePlugins(JavaServerAppPackaging)
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka"  %% "akka-actor"       % "2.4.2",
@@ -21,4 +22,6 @@ libraryDependencies ++= Seq(
 )
 
 fork in run := true
+
+herokuAppName in Compile := "fast-sands-53013"
 
