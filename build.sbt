@@ -3,6 +3,8 @@ name := "NotesAndThings"
 version := "1.0"
 scalaVersion := "2.11.7"
 
+// Use "sbt stage deployHeroku" to deploy the application remotely
+
 enablePlugins(JavaServerAppPackaging)
 
 libraryDependencies ++= Seq(

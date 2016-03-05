@@ -140,14 +140,15 @@ object Main extends App {
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(5 seconds)
     implicit def executionContext = system.dispatcher
-    val port = Properties.envOrElse("PORT", "3000)").toInt
 
+    val interface = "0.0.0.0"
+    val port = Properties.envOrElse("PORT", "3000").toInt
     val serverActor = system.actorOf(Props[ServerActor])
+
 //    (serverActor ? None)
 //        .foreach { _ => println("Something Happened!") }
 
-//    IO(Http) ! Http.Bind(serverActor, interface="127.0.0.1", port=80)
-    IO(Http) ask Http.Bind(serverActor, interface="0.0.0.0", port=port)
+    IO(Http) ask Http.Bind(serverActor, interface=interface, port=port)
   }
 }
 
