@@ -1,12 +1,28 @@
 package com.celestia.notesandthings.actors
 
+
+import scala.concurrent.duration._
+//import scala.util.{Try, Success, Failure}
+
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
-import com.celestia.notesandthings.data.Note
-import com.celestia.notesandthings.{Create, Get}
+import akka.pattern.ask
+import akka.http._
+
 import spray.json.DefaultJsonProtocol
+import spray.json.DefaultJsonProtocol._
+import spray.httpx.SprayJsonSupport
+import spray.httpx.SprayJsonSupport._
+import spray.httpx.marshalling._
+import spray.httpx.unmarshalling._
+import spray.http._
 import spray.routing.{Directives, HttpService}
+import spray.http._
+import MediaTypes._
+
+import com.celestia.notesandthings.data.{Success, Get, Note, GetAll}
+
 
 /**
   * Created by celestia on 3/5/16.
@@ -26,32 +42,56 @@ class ServerActor extends Actor
 
   def routes = {
     logRequestResponse("akka-routes") {
-      path("notes" / Segment) { id =>
-        get {
-          complete {
-            (db ? Get(id.toInt))
-                .map {
-                  case n @ Note(_, _) =>
-//                    Ok(n)
-                    s"Ok: $n"
-                  case _ =>
-//                    Exception
-                  s"Something Went Wrong"
-                }
+//      path("notes") {
+//        get {
+//          complete {
+//            (db ? GetAll)
+//                .map {
+//                  case l@(h :: t) =>
+//                    s"$l"
+//                  case _ =>
+//                    s"Something went wrong"
+//                }
+//          }
+//        }
+//      } ~
+//      path("notes" / Segment) { id =>
+//        import Note._
+//        get {
+//          complete {
+//            (db ? Get(id)).map {
+//              case n@Note(_, _, _) =>
+//                marshal(n)
+//              case _ =>
+//                marshal(s"Something went wrong")
+//            }
+//          }
+//        }
+//      } ~
+      pathPrefix("notes") {
+        pathEnd {
+          get {
+            complete {
+              (db ? GetAll).map {
+                case Success(l:List[Note]) =>
+                  marshal(l.toStream)
+                case _ =>
+                  marshal(s"An error occurred")
+              }
+            }
           }
-        }
-      } ~
-      path("something" / Segment) { id =>
-        get {
-          complete {
-            s"Got message from id: $id"
-          }
-        }
-      } ~
-      path("something") {
-        get {
-          complete {
-            s"Got Something!"
+        } ~
+        path(Segment) { id =>
+          import Note._
+          get {
+            complete {
+              (db ? Get(id)).map {
+                case Success(n:Note) =>
+                  marshal(n)
+                case _ =>
+                  marshal(s"An error occurred")
+              }
+            }
           }
         }
       } ~
@@ -62,13 +102,7 @@ class ServerActor extends Actor
       } ~
       post {
         complete {
-          (db ? Create(Note("Something", "This is a note!")))
-              .map {
-                case Ok =>
-                  s"Success!"
-                case _ =>
-                  s"Something went wrong."
-              }
+          s"Posted Something"
         }
       }
     }
