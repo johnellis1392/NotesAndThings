@@ -40,7 +40,10 @@ case class Note(title: String, content: String)
 
 
 class DBActor extends Actor {
-  val conn = MongoConnection("localhost", 27017) // Mongo Connection
+  val interface = Properties.envOrElse("DB_PORT_27017_TCP_ADDR", "0.0.0.0")
+  val port = Properties.envOrElse("DB_PORT_27017_TCP_PORT", "27017").toInt
+
+  val conn = MongoConnection(interface, port) // Mongo Connection
   val mongo = conn("notesandthings") // NotesAndThings Database
   val notes = mongo("notes") // Notes collection
 
@@ -71,10 +74,12 @@ class ServerActor extends Actor
     with Directives
     with DefaultJsonProtocol
     with HttpService {
+
   implicit val system = ActorSystem()
   implicit val executionContext = system.dispatcher
   implicit val timeout = Timeout(5 seconds)
   implicit val materializer = ActorMaterializer()
+
   override def actorRefFactory = context
   private lazy val db = system.actorOf(Props[DBActor])
 
@@ -145,10 +150,11 @@ object Main extends App {
     val port = Properties.envOrElse("PORT", "3000").toInt
     val serverActor = system.actorOf(Props[ServerActor])
 
-//    (serverActor ? None)
-//        .foreach { _ => println("Something Happened!") }
-
     IO(Http) ask Http.Bind(serverActor, interface=interface, port=port)
+//    val env_interface = Properties.envOrElse("DB_PORT_27017_TCP_ADDR", "0.0.0.0")
+//    println("[DEBUG] Interface: " + env_interface)
+//    val env_port = Properties.envOrElse("DB_PORT_27017_TCP_PORT", "27017").toInt
+//    println("[DEBUG] Port: " + env_port)
   }
 }
 
