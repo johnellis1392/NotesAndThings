@@ -2,7 +2,6 @@ package com.celestia.notesandthings.actors
 
 
 import scala.concurrent.duration._
-//import scala.util.{Try, Success, Failure}
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.stream.ActorMaterializer
@@ -21,7 +20,7 @@ import spray.routing.{Directives, HttpService}
 import spray.http._
 import MediaTypes._
 
-import com.celestia.notesandthings.data.{Success, Get, Note, GetAll}
+import com.celestia.notesandthings.data._
 
 
 /**
@@ -38,75 +37,80 @@ class ServerActor extends Actor
   implicit val materializer = ActorMaterializer()
 
   override def actorRefFactory = context
-  private lazy val db = system.actorOf(Props[DBActor])
+  lazy val db = system.actorOf(Props[DBActor])
 
+
+  override def receive = runRoute(routes)
   def routes = {
     logRequestResponse("akka-routes") {
-//      path("notes") {
-//        get {
-//          complete {
-//            (db ? GetAll)
-//                .map {
-//                  case l@(h :: t) =>
-//                    s"$l"
-//                  case _ =>
-//                    s"Something went wrong"
-//                }
-//          }
-//        }
-//      } ~
-//      path("notes" / Segment) { id =>
-//        import Note._
-//        get {
-//          complete {
-//            (db ? Get(id)).map {
-//              case n@Note(_, _, _) =>
-//                marshal(n)
-//              case _ =>
-//                marshal(s"Something went wrong")
-//            }
-//          }
-//        }
-//      } ~
       pathPrefix("notes") {
         pathEnd {
-          get {
-            complete {
-              (db ? GetAll).map {
-                case Success(l:List[Note]) =>
-                  marshal(l.toStream)
-                case _ =>
-                  marshal(s"An error occurred")
-              }
+          post {
+            entity(as[Note]) { note =>
+              println(s"Received request: $note")
+              createNote(note)
             }
+          } ~ get {
+            listNotes
           }
-        } ~
-        path(Segment) { id =>
-          import Note._
+        } ~ path(Segment) { id =>
           get {
-            complete {
-              (db ? Get(id)).map {
-                case Success(n:Note) =>
-                  marshal(n)
-                case _ =>
-                  marshal(s"An error occurred")
-              }
-            }
+            getNote(id)
           }
-        }
-      } ~
-      get {
-        complete {
-          s"Got a path on the base route!"
-        }
-      } ~
-      post {
-        complete {
-          s"Posted Something"
         }
       }
     }
   }
 
-  override def receive = runRoute(routes)
+
+  /**
+    * Query the given actor to create a new note
+    *
+    * @param note
+    * @return
+    */
+  def createNote[A](note: Note) = {
+    complete {
+      (db ? Create(note)).map {
+        case Ok =>
+//          marshal(s"Success")
+          s"Success"
+        case _ =>
+//          marshal(s"Something went wrong")
+          s"Something went wrong"
+      }
+    }
+  }
+
+
+  def listNotes = {
+    complete {
+      (db ? GetAll).map {
+        case Success(l: List[Note]) =>
+          l.toStream
+//          marshal(l.toStream)
+//        case _ =>
+//          marshal(s"An error occurred")
+//          s"An error occurred"
+      }
+    }
+  }
+
+
+  def getNote(id: String) = {
+    rejectEmptyResponse {
+      complete {
+        (db ? Get(id)).mapTo[Option[Note]]
+//        (db ? Get(id)).map {
+//          case Some(n: Note) =>
+//            //          marshal(n)
+//            n
+//          case None =>
+//
+//          //          marshal(s"Not Found")
+//          //          s"Not Found"
+//        }
+      }
+    }
+  }
 }

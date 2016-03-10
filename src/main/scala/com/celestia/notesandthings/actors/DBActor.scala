@@ -1,12 +1,16 @@
 package com.celestia.notesandthings.actors
 
 import akka.actor.Actor
-import com.celestia.notesandthings.data._
-import com.mongodb.WriteResult
+
+import com.mongodb.{BasicDBObject, WriteResult}
 import com.mongodb.casbah.MongoConnection
 import com.mongodb.casbah.commons.{Imports, MongoDBList, MongoDBObject}
+import com.mongodb.casbah.Imports._
 
 import scala.util.Properties
+
+import com.celestia.notesandthings.data._
+import com.celestia.notesandthings.data.Note._
 
 
 /**
@@ -16,49 +20,30 @@ class DBActor extends Actor {
   val interface = Properties.envOrElse("DB_PORT_27017_TCP_ADDR", "0.0.0.0")
   val port = Properties.envOrElse("DB_PORT_27017_TCP_PORT", "27017").toInt
 
-  val conn = MongoConnection(interface, port) // Mongo Connection
-  val mongo = conn("notesandthings") // NotesAndThings Database
-  val notes = mongo("notes") // Notes collection
+  val conn:MongoClient = MongoClient(interface, port)
+  val mongo:MongoDB = conn("notesandthings")
+  val notes:MongoCollection = mongo("notes")
 
-
-  /**
-    * Translate a note to a mongo object
-    *
-    * @param note
-    */
-  implicit class NoteMongoSerializer(note: Note) {
-    def serialize:Imports.DBObject =
-      MongoDBObject(
-        "title" -> note.title,
-        "content" -> note.content,
-        "children" -> MongoDBList(note.children.map { _.serialize })
-      )
-  }
-
-  implicit class NoteMongoDeserializer(obj: MongoDBObject) {
-    def deserialize:Note =
-      Note(
-        obj getAs[String] "title" getOrElse "",
-        obj getAs[String] "content" getOrElse "",
-        obj.to[List] map { _.asInstanceOf[MongoDBObject] deserialize }
-      )
-  }
 
   override def receive = {
     case GetAll =>
+      println(s"Received Get All")
       sender ! Success {
-        notes.to[List] map { _.asInstanceOf[MongoDBObject] deserialize }
+        notes.to[List] map { _.deserialize }
       }
 
     case Get(id) =>
-      sender ! Success {
-        notes.findOneByID(id) map {
-          _.asInstanceOf[MongoDBObject] deserialize
-        } getOrElse Note()
+      println(s"Received get for $id")
+      implicit val db = conn
+      sender ! {
+        Note(_id = new ObjectId(id)).get
       }
 
     case Create(note: Note) =>
-      notes.insert(note serialize)
+
+      println(s"Received create message: $note")
+      notes.insert(note.serialize)
+      println(s"Inserted note")
       sender ! Ok
 
     case Delete(id) =>
@@ -68,6 +53,7 @@ class DBActor extends Actor {
       sender ! Ok
 
     case _ =>
+      println(s"Received unmatched operation")
       sender ! InvalidOperation
   }
 }

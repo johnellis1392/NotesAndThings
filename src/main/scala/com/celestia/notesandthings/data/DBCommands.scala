@@ -6,7 +6,7 @@ package com.celestia.notesandthings.data
 sealed trait DBCommands
 case object GetAll extends DBCommands
 case class Get(id: String) extends DBCommands
-case class Create[A](a: A) extends DBCommands
+case class Create(a: Note) extends DBCommands
 case class Delete(id: String) extends DBCommands
-case class Update[A](a: A) extends DBCommands
+case class Update(a: Note) extends DBCommands
 
