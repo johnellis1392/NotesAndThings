@@ -73,10 +73,8 @@ class ServerActor extends Actor
     complete {
       (db ? Create(note)).map {
         case Ok =>
-//          marshal(s"Success")
           s"Success"
         case _ =>
-//          marshal(s"Something went wrong")
           s"Something went wrong"
       }
     }
@@ -88,10 +86,6 @@ class ServerActor extends Actor
       (db ? GetAll).map {
         case Success(l: List[Note]) =>
           l.toStream
-//          marshal(l.toStream)
-//        case _ =>
-//          marshal(s"An error occurred")
-//          s"An error occurred"
       }
     }
   }
@@ -101,16 +95,8 @@ class ServerActor extends Actor
     rejectEmptyResponse {
       complete {
         (db ? Get(id)).mapTo[Option[Note]]
-//        (db ? Get(id)).map {
-//          case Some(n: Note) =>
-//            //          marshal(n)
-//            n
-//          case None =>
-//
-//          //          marshal(s"Not Found")
-//          //          s"Not Found"
-//        }
       }
     }
   }
 }
+

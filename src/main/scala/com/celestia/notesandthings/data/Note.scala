@@ -111,17 +111,5 @@ object Note extends DefaultJsonProtocol
         .map { _.deserialize }
     }
   }
-
-
-  /**
-    * Serialize and deserialize ObjectId to javascript values
-    */
-  implicit object ObjectIdJsonSerializer extends RootJsonFormat[ObjectId] {
-    override def write(o:ObjectId):JsValue = JsString(o.toString)
-    override def read(s:JsValue):ObjectId = s match {
-      case JsString(s) => new ObjectId(s)
-      case _ => throw new Exception("Tried to serialize non-string object to ObjectId: " + s.toString)
-    }
-  }
 }
 
